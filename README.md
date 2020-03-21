@@ -1,3 +1,51 @@
+
+1. docker-compose up --build
+
+http://localhost:9000
+
+1. `docker-compose up -d`
+2. wp-cli commands: `docker-compose run --rm wp-cli wp plugin install meta-box --activate`
+3. var/www/html is now accessible in repo folder
+
+Automatic setup (2DO: add demo users)
+```
+docker-compose run --rm wp-cli wp plugin install meta-box --activate
+docker-compose run --rm wp-cli wp plugin install h5p --activate
+docker-compose run --rm wp-cli wp plugin install google-sitemap-generator --activate
+docker-compose run --rm wp-cli wp plugin install https://github.com/programmieraffe/oer-at-our-institution/archive/master.zip --activate
+docker-compose run --rm wp-cli wp user create bob-editor bob@example.com --role=editor --user_pass=test
+```
+
+
+## Debug
+
+Debug PHP:
+Check out docker > Dashboard > wordpress > Logs
+
+Debug:
+
+1. Check permissions: `docker-compose run --rm wp-cli ls -ls` (wp-content should be owned by www-data)
+2. Check current user: `docker-compose run --rm wp-cli whoami`
+
+Run wp-cli commands (wpcli is "wp", it's confusing ;-))
+
+`docker-compose run --rm wp-cli wp [command for wpcli]`
+
+`run --rm wp-cli wp plugin install meta-box --activate`
+
+
+If config changed, we need:
+`docker-compose up -d --build`
+
+## Cleaning up:
+https://blog.servivum.com/putzfee-gesucht-docker-hosts-sauber-halten/
+```
+docker image prune
+docker container prune
+docker volume prune
+docker network prune
+```
+
 #### Wordpress Development Stack
 [![Build Status](https://travis-ci.org/project-wordpress/wpdev.svg?branch=master)](https://travis-ci.org/project-wordpress/wpdev)
 
